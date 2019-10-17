@@ -1,25 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+
+const tasks = [
+  {
+    id: 1,
+    name: "Ir a clase",
+    color: "red"
+  },
+  {
+    id: 2,
+    name: "Descansar",
+    color: "green"
+  }
+];
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {tasks.map(({ id, name, color }) => (
+        <div style={{ backgroundColor: color }} key={id} className="task">
+          {name}
+        </div>
+      ))}
+
+      <button>Add task</button>
+    </>
   );
 }
 
