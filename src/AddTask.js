@@ -1,14 +1,18 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 
 const AddTask = ({ addTask }) => {
-    const taskNameRef = useRef(null);
+    const [taskName, setTaskName] = useState("");
 
     console.log("render AddTask")
     return <>
-        <input ref={taskNameRef} id="taskName" />
-        <button onClick={() => {
-            addTask(taskNameRef.current.value);
-        }}>Add Task</button>
+        <form onSubmit={(event) => {
+            addTask(taskName);
+            setTaskName("");
+            event.preventDefault();
+        }}>
+            <input value={taskName} onChange={event => setTaskName(event.target.value)} id="taskName" />
+            <input type="submit" value="Add task" />
+        </form>
     </>
 }
 
