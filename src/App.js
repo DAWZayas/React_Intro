@@ -18,18 +18,24 @@ export const initialTasks = [
 function App() {
 
   const [tasks, setTasks] = useState(initialTasks);
+  const [actualId, setActualId] = useState(tasks.length);
 
-  const addTask = taskName => setTasks(tasks.concat({
-    id: tasks.length + 1,
-    name: taskName,
-    color: "orange"
-  }));
+  const addTask = taskName => {
+    setActualId(actualId + 1);
+    setTasks(tasks.concat({
+      id: actualId + 1,
+      name: taskName,
+      color: "orange"
+    }))
+  };
+
+  const removeTask = taskId => setTasks(tasks.filter(task => task.id !== taskId));
 
   console.log("render APP")
 
   return (
     <>
-      <TaskList tasks={tasks} />
+      <TaskList tasks={tasks} removeTask={removeTask} />
       <AddTask addTask={addTask} />
     </>
   );
