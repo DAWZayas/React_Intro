@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import TaskList from "./TaskList";
 import AddTask from "./AddTask";
 
@@ -18,12 +18,12 @@ export const initialTasks = [
 function App() {
 
   const [tasks, setTasks] = useState(initialTasks);
-  const [actualId, setActualId] = useState(tasks.length);
+  let actualId = useRef(tasks.length);
 
   const addTask = taskName => {
-    setActualId(actualId + 1);
+    actualId.current = actualId.current + 1;
     setTasks(tasks.concat({
-      id: actualId + 1,
+      id: actualId.current,
       name: taskName,
       color: "orange"
     }))
