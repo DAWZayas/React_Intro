@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import TaskList from "./TaskList";
 import AddTask from "./AddTask";
 
@@ -15,30 +15,42 @@ export const initialTasks = [
   }
 ];
 
-function App() {
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tasks: initialTasks,
+      actualId: initialTasks.length
+    }
+    this.removeTask = function (taskId) {
+      this.setState({
+        tasks: this.state.tasks.filter(task => task.id !== taskId)
+      })
+    }.bind(this);
+  }
 
-  const [tasks, setTasks] = useState(initialTasks);
-  let actualId = useRef(tasks.length);
+  addTask = (taskName) => {
+    const { actualId, tasks } = this.state;
 
-  const addTask = taskName => {
-    actualId.current = actualId.current + 1;
-    setTasks(tasks.concat({
-      id: actualId.current,
-      name: taskName,
-      color: "orange"
-    }))
-  };
+    this.setState({
+      actualId: actualId + 1,
+      tasks: tasks.concat({
+        id: actualId + 1,
+        name: taskName,
+        color: "orange"
+      })
+    }, () => console.log("Task Added"))
+  }
 
-  const removeTask = taskId => setTasks(tasks.filter(task => task.id !== taskId));
+  render() {
+    console.log("render App")
+    const { tasks } = this.state;
 
-  console.log("render APP")
-
-  return (
-    <>
-      <TaskList tasks={tasks} removeTask={removeTask} />
-      <AddTask addTask={addTask} />
-    </>
-  );
+    return (<div>
+      <TaskList tasks={tasks} removeTask={this.removeTask} />
+      <AddTask addTask={this.addTask} />
+    </div>);
+  }
 }
 
 export default App;
