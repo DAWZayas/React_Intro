@@ -1,13 +1,11 @@
 import React from "react"
 
-const Task = ({ id, name, color, removeTask }) => {
-    console.log("render Task " + id);
+const Task = ({ removeTask, children }) => {
+    console.log("render Task");
     return (
         <div>
-            <div style={{ backgroundColor: color, display: "inline-block" }} className="task">
-                {name}
-            </div>
-            <button onClick={() => removeTask(id)}>remove</button>
+            {children("Task")}
+            <button onClick={removeTask}>remove</button>
         </div>
     );
 }

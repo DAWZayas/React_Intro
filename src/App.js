@@ -30,16 +30,18 @@ class App extends React.Component {
   }
 
   addTask = (taskName) => {
-    const { actualId, tasks } = this.state;
-
     this.setState({
-      actualId: actualId + 1,
-      tasks: tasks.concat({
-        id: actualId + 1,
-        name: taskName,
-        color: "orange"
-      })
-    }, () => console.log("Task Added"))
+      actualId: this.state.actualId + 1,
+    }, () => {
+      console.log("Incremented actualId");
+      this.setState({
+        tasks: this.state.tasks.concat({
+          id: this.state.actualId,
+          name: taskName,
+          color: "orange"
+        })
+      }, () => console.log("Task Added"))
+    });
   }
 
   render() {
